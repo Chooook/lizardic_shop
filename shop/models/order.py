@@ -30,4 +30,8 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return self.pk
+        return f'%s x%s from %s'.format(
+            self.item.item_name,
+            self.quantity,
+            self.created_at
+        )
