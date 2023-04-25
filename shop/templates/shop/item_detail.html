@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Item {{ object|title }} details
+{% endblock %}
+
+{% block body %}
+  <h1>Item {{ object|title }} details</h1>
+  <ul>
+    <li>
+      Name: {{ object }}
+    </li>
+  </ul>
+  <a class="btn btn-primary" href="{% url 'shop:item-update' pk=object.pk %}">Change</a>
+  <a class="btn btn-danger" href="{% url 'shop:item-delete' pk=object.pk %}">Delete</a>
+{% endblock %}

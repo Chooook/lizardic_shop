@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  Item list
+{% endblock %}
+
+{% block body %}
+  <h1>Items</h1>
+  {% if item_list %}
+    <h3>Items list:</h3>
+    <ul>
+      {% for item in item_list %}
+        <li>
+          <a href="{% url 'shop:item-detail' pk=item.pk %}">
+            {{ item }}
+          </a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <h4>There is no items yet</h4>
+  {% endif %}
+{#    {% if user.is_superuser %}#}
+    <a class="btn btn-primary" href="{% url 'shop:item-create' %}">Create</a>
+{#    {% endif %}#}
+{% endblock %}
