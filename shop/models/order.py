@@ -30,7 +30,7 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return f'%s x%s from %s'.format(
+        return '{} x{} at {}'.format(
             self.item.item_name,
             self.quantity,
             self.created_at

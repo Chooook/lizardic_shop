@@ -4,6 +4,7 @@ from .models import (
     Item,
     Category,
     SubCategory,
+    Order,
 )
 
 
@@ -65,3 +66,17 @@ class SubCategoryForm(forms.ModelForm):
         queryset=Category.objects.all(),
         widget=forms.Select,
     )
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ('item', 'quantity', 'address', 'phone', 'status')
+
+    item = forms.ModelChoiceField(
+        label='',
+        queryset=Item.objects.all(),
+        widget=forms.Select,
+    )
+    quantity = forms.IntegerField(min_value=1, label='Quantity')
+    address = forms.CharField(label='Address to deliver to')
