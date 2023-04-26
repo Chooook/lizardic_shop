@@ -50,7 +50,8 @@ class Item(models.Model):
         help_text='Описание позиции'
     )
     image            = models.ImageField(
-        upload_to='media/items_images/'
+        upload_to='media/items_images/',
+        blank=True
     )
 
     def __str__(self):

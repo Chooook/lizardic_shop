@@ -24,25 +24,35 @@ class ItemForm(forms.ModelForm):
         )
 
     item_name        = forms.CharField(label='Item name', max_length=250)
-    price            = forms.IntegerField(label='Price', min_value=0)
-    stock            = forms.IntegerField(label='Stock', min_value=0)
-    available        = forms.BooleanField(label='Availability')
+    price            = forms.IntegerField(
+        label='Price',
+        min_value=0,
+        initial=1000
+    )
+    stock            = forms.IntegerField(
+        label='Stock',
+        min_value=0,
+        initial=1
+    )
+    available        = forms.BooleanField(label='Availability', initial=True)
     category         = forms.ModelChoiceField(
         label='',
         queryset=Category.objects.all(),
         widget=forms.Select,
+        initial=Category.objects.first()
     )
     subcategory      = forms.ModelChoiceField(
         label='',
         queryset=SubCategory.objects.all(),
         widget=forms.Select,
+        initial=SubCategory.objects.first()
     )
     item_description = forms.CharField(
         label='Item description',
         widget=forms.Textarea,
         required=False
     )
-    image            = forms.ImageField(allow_empty_file=True)
+    image            = forms.ImageField(allow_empty_file=True, required=False)
 
 
 class CategoryForm(forms.ModelForm):
@@ -65,6 +75,7 @@ class SubCategoryForm(forms.ModelForm):
         label='',
         queryset=Category.objects.all(),
         widget=forms.Select,
+        initial=Category.objects.first()
     )
 
 
@@ -75,8 +86,9 @@ class OrderForm(forms.ModelForm):
 
     item = forms.ModelChoiceField(
         label='',
-        queryset=Item.objects.all(),
+        queryset=Item.objects.filter(available=True),
         widget=forms.Select,
+        initial=Item.objects.filter(available=True).first()
     )
     quantity = forms.IntegerField(min_value=1, label='Quantity')
     address = forms.CharField(label='Address to deliver to')

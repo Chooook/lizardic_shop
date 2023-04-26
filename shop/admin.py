@@ -18,8 +18,6 @@ class ItemModelAdmin(admin.ModelAdmin):
         'available',
         'category',
         'subcategory',
-        'item_description',
-        'image',
     )
     prepopulated_fields = {'slug': ('item_name', )}
 
