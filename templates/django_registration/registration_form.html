@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+{% if form.errors %}
+  {% for error in form.errors %}
+    <p>{{ error }}</p>
+  {% endfor %}
+{% endif %}
+
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'django_registration_register' %}">
+{% csrf_token %}
+  {{ form.as_p }}
+
+<input type="submit" value="register" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+{% endblock %}
