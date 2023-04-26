@@ -79,6 +79,12 @@ WSGI_APPLICATION = 'lizardic_shop.wsgi.application'
 
 AUTH_USER_MODEL = 'user.MyUser'
 
+LOGIN_REDIRECT_URL = '/'
+
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 

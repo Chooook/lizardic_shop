@@ -1,5 +1,11 @@
 <header style="margin-bottom: 20px">
-    <ul class="modal-header" style="text-align: center">
-        <li class="list-inline-item"><a href="{% url 'courses:index' %}">Главная страница</a></li>
-    </ul>
+  <ul class="modal-header" style="text-align: center">
+    <li class="list-inline-item"><a href="{% url 'shop:index' %}">Главная страница</a></li>
+    <li class="list-inline-item"><a href="{% url 'shop:item-list' %}">Список товаров</a></li>
+    {% if user.is_authenticated %}
+      <li>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
+    {% else %}
+      <li><a href="{% url 'login'%}?next={{request.path}}">Login</a></li>
+    {% endif %}
+  </ul>
 </header>
