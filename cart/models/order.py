@@ -1,22 +1,28 @@
 from django.db import models
 
-from catalog.models import Item
+from cart.models import Cart
+from user.models import MyUser
 
 
 class Order(models.Model):
 
-    item       = models.ForeignKey(
-        Item,
-        on_delete=models.CASCADE
+    user       = models.ForeignKey(
+        MyUser,
+        on_delete=models.CASCADE,
+        related_name='orders'
     )
-    quantity   = models.PositiveSmallIntegerField(
-        default=1
+    cart       = models.ForeignKey(
+        Cart,
+        on_delete=models.CASCADE,
+        related_name='order'
     )
     address    = models.CharField(
         max_length=100,
         default='',
         blank=True
     )
+    # TODO Сделать, чтобы были только цифры:
+    #  Возможное решение - библиотека django-phonenumber-field
     phone      = models.CharField(
         max_length=12,
         default='',
@@ -30,8 +36,8 @@ class Order(models.Model):
     )
 
     def __str__(self):
-        return '{} x{} at {}'.format(
-            self.item.item_name,
-            self.quantity,
-            self.created_at
+        return 'Заказ №%s от: %s, заказчик: %s' % (
+            self.created_at,
+            self.user,
+            self.pk
         )
