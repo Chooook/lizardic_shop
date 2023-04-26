@@ -39,13 +39,13 @@ class ItemForm(forms.ModelForm):
         label='',
         queryset=Category.objects.all(),
         widget=forms.Select,
-        initial=Category.objects.first()
+        # initial=Category.objects.first()
     )
     subcategory      = forms.ModelChoiceField(
         label='',
         queryset=SubCategory.objects.all(),
         widget=forms.Select,
-        initial=SubCategory.objects.first()
+        # initial=SubCategory.objects.first()
     )
     item_description = forms.CharField(
         label='Item description',
@@ -75,7 +75,7 @@ class SubCategoryForm(forms.ModelForm):
         label='',
         queryset=Category.objects.all(),
         widget=forms.Select,
-        initial=Category.objects.first()
+        # initial=Category.objects.first()
     )
 
 
@@ -88,7 +88,7 @@ class OrderForm(forms.ModelForm):
         label='',
         queryset=Item.objects.filter(available=True),
         widget=forms.Select,
-        initial=Item.objects.filter(available=True).first()
+        # initial=Item.objects.filter(available=True).first()
     )
     quantity = forms.IntegerField(min_value=1, label='Quantity')
     address = forms.CharField(label='Address to deliver to')

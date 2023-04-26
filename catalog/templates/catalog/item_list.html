@@ -11,7 +11,7 @@
     <ul>
       {% for item in item_list %}
         <li>
-          <a href="{% url 'shop:item-detail' pk=item.pk %}">
+          <a href="{% url 'catalog:item-detail' pk=item.pk %}">
             {{ item }}
           </a>
         </li>
@@ -21,6 +21,6 @@
     <h4>There is no items yet</h4>
   {% endif %}
 {#    {% if user.is_superuser %}#}
-    <a class="btn btn-primary" href="{% url 'shop:item-create' %}">Create</a>
+    <a class="btn btn-primary" href="{% url 'catalog:item-create' %}">Create</a>
 {#    {% endif %}#}
 {% endblock %}

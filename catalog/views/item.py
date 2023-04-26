@@ -7,13 +7,13 @@ from django.views.generic import (
     DeleteView,
 )
 
-from shop.models import Item
-from shop.forms import ItemForm
+from catalog.models import Item
+from catalog.forms import ItemForm
 
 
 class ItemCreateView(CreateView):
     model = Item
-    success_url = reverse_lazy('shop:item-list')
+    success_url = reverse_lazy('catalog:item-list')
     form_class = ItemForm
 
 
@@ -28,10 +28,10 @@ class ItemDetailView(DetailView):
 
 class ItemUpdateView(UpdateView):
     model = Item
-    success_url = reverse_lazy('shop:item-list')
+    success_url = reverse_lazy('catalog:item-list')
     form_class = ItemForm
 
 
 class ItemDeleteView(DeleteView):
     model = Item
-    success_url = reverse_lazy('shop:item-list')
+    success_url = reverse_lazy('catalog:item-list')

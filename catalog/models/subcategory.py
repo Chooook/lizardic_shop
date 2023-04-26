@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
-from shop.models import Category
+from catalog.models import Category
 
 
 class SubCategory(models.Model):

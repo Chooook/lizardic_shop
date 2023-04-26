@@ -1,7 +1,7 @@
 <header style="margin-bottom: 20px">
   <ul class="modal-header" style="text-align: center">
-    <li class="list-inline-item"><a href="{% url 'shop:index' %}">Главная страница</a></li>
-    <li class="list-inline-item"><a href="{% url 'shop:item-list' %}">Список товаров</a></li>
+    <li class="list-inline-item"><a href="{% url 'catalog:index' %}">Главная страница</a></li>
+    <li class="list-inline-item"><a href="{% url 'catalog:item-list' %}">Список товаров</a></li>
     {% if user.is_authenticated %}
       <li>User: {{ user.get_username }} <a href="{% url 'logout'%}?next={{request.path}}">Logout</a></li>
     {% else %}

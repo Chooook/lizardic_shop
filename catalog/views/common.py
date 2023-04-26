@@ -2,4 +2,4 @@ from django.views.generic import TemplateView
 
 
 class IndexTemplateView(TemplateView):
-    template_name = 'shop/index.html'
+    template_name = 'catalog/index.html'

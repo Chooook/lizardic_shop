@@ -7,13 +7,13 @@ from django.views.generic import (
     DeleteView,
 )
 
-from shop.models import SubCategory
-from shop.forms import SubCategoryForm
+from catalog.models import SubCategory
+from catalog.forms import SubCategoryForm
 
 
 class SubCategoryCreateView(CreateView):
     model = SubCategory
-    success_url = reverse_lazy('shop:subcategory-list')
+    success_url = reverse_lazy('catalog:subcategory-list')
     form_class = SubCategoryForm
 
 
@@ -28,10 +28,10 @@ class SubCategoryDetailView(DetailView):
 
 class SubCategoryUpdateView(UpdateView):
     model = SubCategory
-    success_url = reverse_lazy('shop:subcategory-list')
+    success_url = reverse_lazy('catalog:subcategory-list')
     form_class = SubCategoryForm
 
 
 class SubCategoryDeleteView(DeleteView):
     model = SubCategory
-    success_url = reverse_lazy('shop:subcategory-list')
+    success_url = reverse_lazy('catalog:subcategory-list')
