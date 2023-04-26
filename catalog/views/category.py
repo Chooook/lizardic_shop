@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -11,7 +12,8 @@ from catalog.models import Category
 from catalog.forms import CategoryForm
 
 
-class CategoryCreateView(CreateView):
+class CategoryCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'admin'
     model = Category
     success_url = reverse_lazy('catalog:category-list')
     form_class = CategoryForm
@@ -26,12 +28,14 @@ class CategoryDetailView(DetailView):
     model = Category
 
 
-class CategoryUpdateView(UpdateView):
+class CategoryUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'admin'
     model = Category
     success_url = reverse_lazy('catalog:category-list')
     form_class = CategoryForm
 
 
-class CategoryDeleteView(DeleteView):
+class CategoryDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'admin'
     model = Category
     success_url = reverse_lazy('catalog:category-list')

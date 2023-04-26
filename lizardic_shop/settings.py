@@ -80,6 +80,8 @@ WSGI_APPLICATION = 'lizardic_shop.wsgi.application'
 
 AUTH_USER_MODEL = 'user.MyUser'
 
+LOGIN_URL = '/users/login/'
+
 LOGIN_REDIRECT_URL = '/'
 
 if DEBUG:

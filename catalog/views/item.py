@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
@@ -11,7 +12,8 @@ from catalog.models import Item
 from catalog.forms import ItemForm
 
 
-class ItemCreateView(CreateView):
+class ItemCreateView(PermissionRequiredMixin, CreateView):
+    permission_required = 'admin'
     model = Item
     success_url = reverse_lazy('catalog:item-list')
     form_class = ItemForm
@@ -26,12 +28,14 @@ class ItemDetailView(DetailView):
     model = Item
 
 
-class ItemUpdateView(UpdateView):
+class ItemUpdateView(PermissionRequiredMixin, UpdateView):
+    permission_required = 'admin'
     model = Item
     success_url = reverse_lazy('catalog:item-list')
     form_class = ItemForm
 
 
-class ItemDeleteView(DeleteView):
+class ItemDeleteView(PermissionRequiredMixin, DeleteView):
+    permission_required = 'admin'
     model = Item
     success_url = reverse_lazy('catalog:item-list')
