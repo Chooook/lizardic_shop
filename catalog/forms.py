@@ -4,7 +4,6 @@ from .models import (
     Item,
     Category,
     SubCategory,
-    Order,
 )
 
 
@@ -39,12 +38,15 @@ class ItemForm(forms.ModelForm):
         label='',
         queryset=Category.objects.all(),
         widget=forms.Select,
+        # FIXME ломает миграции, найти решение:
+        #  Возможное решение - хранение категорий не в бд, а как переменную
         # initial=Category.objects.first()
     )
     subcategory      = forms.ModelChoiceField(
         label='',
         queryset=SubCategory.objects.all(),
         widget=forms.Select,
+        # FIXME ломает миграции, найти решение:
         # initial=SubCategory.objects.first()
     )
     item_description = forms.CharField(
@@ -75,20 +77,6 @@ class SubCategoryForm(forms.ModelForm):
         label='',
         queryset=Category.objects.all(),
         widget=forms.Select,
+        # FIXME ломает миграции, найти решение:
         # initial=Category.objects.first()
     )
-
-
-class OrderForm(forms.ModelForm):
-    class Meta:
-        model = Order
-        fields = ('item', 'quantity', 'address', 'phone', 'status')
-
-    item = forms.ModelChoiceField(
-        label='',
-        queryset=Item.objects.filter(available=True),
-        widget=forms.Select,
-        # initial=Item.objects.filter(available=True).first()
-    )
-    quantity = forms.IntegerField(min_value=1, label='Quantity')
-    address = forms.CharField(label='Address to deliver to')

@@ -7,8 +7,8 @@ from django.views.generic import (
     DeleteView,
 )
 
-from catalog.models import Order
-from catalog.forms import OrderForm
+from cart.models import Order
+from cart.forms import OrderForm
 
 
 class OrderCreateView(CreateView):

@@ -3,8 +3,7 @@ from django.contrib import admin
 from .models import (
     Item,
     Category,
-    SubCategory,
-    Order
+    SubCategory
 )
 
 
@@ -66,21 +65,3 @@ class SubCategoryModelAdmin(admin.ModelAdmin):
         )
         return '; '.join(items)
     display_items.short_description = 'related items'
-
-
-@admin.register(Order)
-class OrderModelAdmin(admin.ModelAdmin):
-    list_display = (
-        'item',
-        'quantity',
-        'address',
-        'phone'
-    )
-
-    # def display_items(self, obj):
-    #     items = obj.items.values_list(
-    #         'item_name',
-    #         flat=True
-    #     )
-    #     return '; '.join(items)
-    # display_items.short_description = 'related items'

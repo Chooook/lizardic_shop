@@ -41,8 +41,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
-    'catalog.apps.CatalogConfig',
     'user.apps.UserConfig',
+    'catalog.apps.CatalogConfig',
+    'cart.apps.CartConfig',
     'django_cleanup.apps.CleanupConfig',
 ]
 
