@@ -19,13 +19,22 @@ class Cart(models.Model):
     )
 
     def add_position(self, item, quantity):
+        if self.positions.filter(item_id=item.id).exists():
+            old_position = self.positions.get(item_id=item.id)
+            quantity += old_position.quantity
+            self.positions.remove(old_position)
+
         position = Position.objects.get_or_create(
             item_id=item,
             quantity=quantity
         )
         self.positions.add(position)
+        return self.positions
 
-        return position
+    def remove_position(self, position):
+        if self.positions.filter(position=position).exists():
+            self.positions.remove(position)
+        return self.positions
 
     def __str__(self):
         return ''.join(
