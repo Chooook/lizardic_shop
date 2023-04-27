@@ -3,7 +3,6 @@ from django import forms
 from .models import (
     Item,
     Category,
-    SubCategory,
 )
 
 
@@ -17,7 +16,6 @@ class ItemForm(forms.ModelForm):
             'stock',
             'available',
             'category',
-            'subcategory',
             'item_description',
             'image'
         )
@@ -42,13 +40,6 @@ class ItemForm(forms.ModelForm):
         #  Возможное решение - хранение категорий не в бд, а как переменную
         # initial=Category.objects.first()
     )
-    subcategory      = forms.ModelChoiceField(
-        label='',
-        queryset=SubCategory.objects.all(),
-        widget=forms.Select,
-        # FIXME ломает миграции, найти решение:
-        # initial=SubCategory.objects.first()
-    )
     item_description = forms.CharField(
         label='Item description',
         widget=forms.Textarea,
@@ -64,19 +55,3 @@ class CategoryForm(forms.ModelForm):
         fields = ('category_name', )
 
     category_name = forms.CharField(label='Category name')
-
-
-class SubCategoryForm(forms.ModelForm):
-
-    class Meta:
-        model = SubCategory
-        fields = ('subcategory_name', 'parent_category')
-
-    subcategory_name = forms.CharField(label='Subcategory name')
-    parent_category  = forms.ModelChoiceField(
-        label='',
-        queryset=Category.objects.all(),
-        widget=forms.Select,
-        # FIXME ломает миграции, найти решение:
-        # initial=Category.objects.first()
-    )

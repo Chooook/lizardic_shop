@@ -1,10 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
-from catalog.models import (
-    Category,
-    SubCategory
-)
+from catalog.models import Category
 
 
 class Item(models.Model):
@@ -33,12 +30,6 @@ class Item(models.Model):
     )
     category         = models.ForeignKey(
         Category,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='items'
-    )
-    subcategory      = models.ForeignKey(
-        SubCategory,
         null=True,
         on_delete=models.SET_NULL,
         related_name='items'
