@@ -41,9 +41,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'rest_framework',
     'user.apps.UserConfig',
     'catalog.apps.CatalogConfig',
     'cart.apps.CartConfig',
+    'catalog_api.apps.CatalogApiConfig',
+    'cart_api.apps.CartApiConfig',
     'django_cleanup.apps.CleanupConfig',
 ]
 
