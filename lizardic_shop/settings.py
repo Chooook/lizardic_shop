@@ -40,8 +40,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'debug_toolbar',
     'rest_framework',
+    'rest_framework.authentication',
+    'corsheaders',
+    'djoser',
+
     'user.apps.UserConfig',
     'catalog.apps.CatalogConfig',
     'cart.apps.CartConfig',
@@ -54,6 +59,7 @@ MIDDLEWARE = [
     'debug_toolbar.middleware.DebugToolbarMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -86,6 +92,10 @@ AUTH_USER_MODEL = 'user.MyUser'
 LOGIN_URL = '/users/login/'
 
 LOGIN_REDIRECT_URL = '/'
+
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:8080'
+]
 
 if DEBUG:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

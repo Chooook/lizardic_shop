@@ -1,3 +1,6 @@
+import djoser.urls
+from django.conf import settings
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
 from django_registration.backends.one_step.views import RegistrationView
@@ -11,6 +14,7 @@ from user.forms import MyUserForm
 router = routers.DefaultRouter()
 router.registry.extend(cart_api_router.registry)
 router.registry.extend(category_api_router.registry)
+router.registry.extend(djoser.urls.base.router.registry)
 
 
 urlpatterns = [
@@ -26,4 +30,5 @@ urlpatterns = [
     path('', include('catalog.urls')),
     path('', include('cart.urls')),
     path('api/', include(router.urls)),
-]
+    path('api/', include('djoser.urls.authtoken')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
