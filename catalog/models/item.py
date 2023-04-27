@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.text import slugify
 
 from catalog.models import Category
@@ -44,6 +45,10 @@ class Item(models.Model):
         upload_to='media/items_images/',
         blank=True
     )
+
+    @cached_property
+    def absolute_url(self):
+        return '/%s/%s/' % (self.category.slug, self.slug)
 
     def __str__(self):
         return self.item_name

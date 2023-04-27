@@ -2,7 +2,6 @@
 
 ### Модели:
 Catalog:
-* SubCategory(-+-)
 * Category(-+-)
 * Item(-+-)
 

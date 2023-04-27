@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.functional import cached_property
 from django.utils.text import slugify
 
 
@@ -14,6 +15,10 @@ class Category(models.Model):
         max_length=120,
         help_text='Текст для ссылки'
     )
+
+    @cached_property
+    def absolute_url(self):
+        return '/%s/' % self.slug
 
     class Meta:
         verbose_name_plural = 'categories'
