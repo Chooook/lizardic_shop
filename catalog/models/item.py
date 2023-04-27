@@ -1,6 +1,10 @@
+from io import BytesIO
+
+from django.core.files import File
 from django.db import models
 from django.utils.functional import cached_property
 from django.utils.text import slugify
+from PIL import Image
 
 from catalog.models import Category
 
@@ -31,20 +35,31 @@ class Item(models.Model):
     )
     category         = models.ForeignKey(
         Category,
-        null=True,
-        on_delete=models.SET_NULL,
-        related_name='items'
+        on_delete=models.CASCADE,
+        related_name='items',
+        help_text='Категория позиции'
     )
     item_description = models.TextField(
-        default='',
         blank=True,
         null=True,
         help_text='Описание позиции'
     )
     image            = models.ImageField(
         upload_to='media/items_images/',
-        blank=True
+        blank=True,
+        null=True,
+        help_text='Фото позиции'
     )
+    thumbnail        = models.ImageField(
+        upload_to='items_images/',
+        blank=True,
+        null=True,
+        help_text='Фото позиции'
+    )
+    created_at       = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ('-created_at', 'item_name')
 
     @cached_property
     def absolute_url(self):
@@ -57,6 +72,31 @@ class Item(models.Model):
         if not self.slug:
             self.slug = slugify(self.item_name)
         super(Item, self).save(*args, **kwargs)
+
+    def get_image(self):
+        if self.image:
+            return 'http://127.0.0.1:8000' + self.image.url
+        return ''
+
+    def get_thumbnail(self):
+        if self.thumbnail:
+            return 'http://127.0.0.1:8000' + self.thumbnail.url
+        else:
+            if self.image:
+                self.thumbnail = self.make_thumbnail(self.image)
+                self.save()
+                return 'http://127.0.0.1:8000' + self.thumbnail.url
+            return ''
+
+    @staticmethod
+    def make_thumbnail( image, size=(200, 200)):
+        img = Image.open(image)
+        img.convert('RGB')
+        img.thumbnail(size)
+        thumb_io = BytesIO()
+        img.save(thumb_io, 'JPEG', quality=85)
+        thumbnail = File(thumb_io, name=image.name)
+        return thumbnail
 
     # @staticmethod
     # def get_all_items_by_category_name(category_name):

@@ -21,6 +21,7 @@ class Category(models.Model):
         return '/%s/' % self.slug
 
     class Meta:
+        ordering = ('category_name',)
         verbose_name_plural = 'categories'
 
     def __str__(self):
