@@ -1,2 +1,2 @@
-from .category import CategoryViewSet
-from .item import ItemViewSet
+from .category import *
+from .item import *
