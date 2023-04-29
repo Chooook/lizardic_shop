@@ -3,15 +3,16 @@ from django.contrib import admin
 from .models import (
     Position,
     Order,
-    Cart
 )
 
 
 @admin.register(Position)
 class PositionModelAdmin(admin.ModelAdmin):
     list_display = (
+        'order',
         'item',
-        'quantity'
+        'price',
+        'quantity',
     )
 
 
@@ -19,28 +20,12 @@ class PositionModelAdmin(admin.ModelAdmin):
 class OrderModelAdmin(admin.ModelAdmin):
     list_display = (
         'user',
-        'cart',
+        'first_name',
+        'last_name',
+        'email',
         'address',
         'phone',
-        'status'
+        'total_price',
+        'created_at',
+        'status',
     )
-
-
-@admin.register(Cart)
-class CartModelAdmin(admin.ModelAdmin):
-    list_display = (
-        'user',
-        'display_positions',
-        'is_active'
-    )
-
-    def display_positions(self, obj):
-        positions = obj.positions.values_list(
-            'item__item_name',
-            'quantity'
-        )
-        return '; '.join(
-            '%s x%s' % pos for pos in positions
-        )
-    display_positions.short_description = 'related positions'
-

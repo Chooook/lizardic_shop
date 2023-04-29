@@ -12,7 +12,6 @@ class Category(models.Model):
     slug          = models.SlugField(
         unique=True,
         blank=True,
-        max_length=120,
         help_text='Текст для ссылки'
     )
 

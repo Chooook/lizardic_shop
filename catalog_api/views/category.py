@@ -1,16 +1,21 @@
-from rest_framework import viewsets, permissions
+from django.http import Http404
+from rest_framework import views
+from rest_framework.response import Response
 
 from catalog.models import Category
 from catalog_api.serializers import CategorySerializer
 
 
-class CategoryReadOnlyViewSet(viewsets.ReadOnlyModelViewSet):
-    permission_classes = (permissions.AllowAny, )
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+class CategoryDetailView(views.APIView):
 
+    @staticmethod
+    def get_category(category_slug):
+        try:
+            return Category.objects.get(slug=category_slug)
+        except Category.DoesNotExist:
+            raise Http404
 
-class CategoryModelViewSet(viewsets.ModelViewSet):
-    permission_classes = (permissions.IsAdminUser, )
-    queryset = Category.objects.all()
-    serializer_class = CategorySerializer
+    def get(self, request, category_slug):
+        category = self.get_category(category_slug)
+        serializer = CategorySerializer(category)
+        return Response(serializer.data)

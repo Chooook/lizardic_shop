@@ -1,3 +1,3 @@
-from cart.models import Cart, Position, Order
+from cart.models import Position, Order
 
-__all__ = ('Cart', 'Position', 'Order')
+__all__ = ('Position', 'Order')

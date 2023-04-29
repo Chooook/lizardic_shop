@@ -10,6 +10,12 @@ from catalog.models import Category
 
 
 class Item(models.Model):
+    category         = models.ForeignKey(
+        Category,
+        on_delete=models.CASCADE,
+        related_name='items',
+        help_text='Категория позиции'
+    )
     item_name        = models.CharField(
         unique=True,
         max_length=250,
@@ -21,8 +27,10 @@ class Item(models.Model):
         max_length=250,
         help_text='Текст для ссылки'
     )
-    price            = models.PositiveSmallIntegerField(
-        default=1000,
+    price            = models.DecimalField(
+        max_digits=6,
+        decimal_places=2,
+        default=100,
         help_text='Цена'
     )
     stock            = models.PositiveSmallIntegerField(
@@ -33,25 +41,19 @@ class Item(models.Model):
         default=True,
         help_text='Доступность для заказа'
     )
-    category         = models.ForeignKey(
-        Category,
-        on_delete=models.CASCADE,
-        related_name='items',
-        help_text='Категория позиции'
-    )
     item_description = models.TextField(
         blank=True,
         null=True,
         help_text='Описание позиции'
     )
     image            = models.ImageField(
-        upload_to='media/items_images/',
+        upload_to='items_images/',
         blank=True,
         null=True,
         help_text='Фото позиции'
     )
     thumbnail        = models.ImageField(
-        upload_to='items_images/',
+        upload_to='items_images/thumbnails',
         blank=True,
         null=True,
         help_text='Фото позиции'
@@ -75,32 +77,25 @@ class Item(models.Model):
 
     def get_image(self):
         if self.image:
-            return 'http://127.0.0.1:8000' + self.image.url
+            return 'http://127.0.0.1:8000/' + self.image.url
         return ''
 
     def get_thumbnail(self):
         if self.thumbnail:
-            return 'http://127.0.0.1:8000' + self.thumbnail.url
+            return 'http://127.0.0.1:8000/' + self.thumbnail.url
         else:
             if self.image:
                 self.thumbnail = self.make_thumbnail(self.image)
                 self.save()
-                return 'http://127.0.0.1:8000' + self.thumbnail.url
+                return 'http://127.0.0.1:8000/' + self.thumbnail.url
             return ''
 
     @staticmethod
-    def make_thumbnail( image, size=(200, 200)):
+    def make_thumbnail(image, size=(200, 200)):
         img = Image.open(image)
         img.convert('RGB')
         img.thumbnail(size)
         thumb_io = BytesIO()
-        img.save(thumb_io, 'JPEG', quality=85)
+        img.save(thumb_io, 'PNG', quality=85)
         thumbnail = File(thumb_io, name=image.name)
         return thumbnail
-
-    # @staticmethod
-    # def get_all_items_by_category_name(category_name):
-    #     if category_name:
-    #         return Item.objects.filter(category__category_name=category_name)
-    #     else:
-    #         return Item.objects.all()

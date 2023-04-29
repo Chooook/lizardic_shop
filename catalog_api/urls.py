@@ -1,14 +1,13 @@
-from django.urls import include, path
-from rest_framework import routers
+from django.urls import path
 
 from catalog_api import views
 
-router = routers.DefaultRouter()
-router.register(r'categories', views.CategoryReadOnlyViewSet)
-router.register(r'categories', views.CategoryModelViewSet)
-router.register(r'items', views.ItemReadOnlyViewSet)
-router.register(r'items', views.ItemModelViewSet)
 
 urlpatterns = [
-   path('api/', include(router.urls)),
+    path('items/<slug:category_slug>/',
+         views.CategoryDetailView.as_view()),
+    path('items/<slug:category_slug>/<slug:item_slug>',
+         views.ItemDetailView.as_view()),
+    path('latest-items', views.LatestItemsListView.as_view()),
+    path('items/search', views.search),
 ]
